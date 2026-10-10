@@ -1,4 +1,6 @@
 
+import { Client, handle_file } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+
 const birdPhoto = document.getElementById("birdPhoto");
 const uploadZone = document.getElementById("uploadZone");
 const previewPanel = document.getElementById("previewPanel");
@@ -6,14 +8,21 @@ const photoPreview = document.getElementById("photoPreview");
 const photoName = document.getElementById("photoName");
 const uploadMessage = document.getElementById("uploadMessage");
 const removePhoto = document.getElementById("removePhoto");
+const identifyButton = document.getElementById("identifyButton");
+const identificationResults = document.getElementById("identificationResults");
+
+const SPACE_NAME = "ksri33/birdlens-ai";
 
 let previewUrl = null;
+let gradioClient = null;
+let isIdentifying = false;
 
 birdPhoto.addEventListener("change", () => {
   const file = birdPhoto.files[0];
 
   uploadMessage.textContent = "";
   uploadMessage.className = "small mt-3 mb-0";
+  identificationResults.replaceChildren();
 
   if (!file) return;
 
@@ -49,11 +58,84 @@ birdPhoto.addEventListener("change", () => {
   uploadZone.classList.add("d-none");
 
   uploadMessage.textContent =
-    "Photo selected! AI identification will be added next.";
+    "Photo selected! Ready to discover your bird.";
   uploadMessage.classList.add("text-success");
 });
 
+identifyButton.addEventListener("click", async () => {
+  const file = birdPhoto.files[0];
+
+  if (!file || isIdentifying) return;
+
+  isIdentifying = true;
+  identifyButton.disabled = true;
+  identifyButton.textContent = "Identifying your bird...";
+  identificationResults.textContent =
+    "Connecting to BirdLens AI. The first request may take a little while.";
+
+  try {
+    if (!gradioClient) {
+      gradioClient = await Client.connect(SPACE_NAME);
+    }
+
+    const result = await gradioClient.predict("/identify_bird", [
+      handle_file(file)
+    ]);
+
+    const predictionText = result.data?.[0];
+
+    if (typeof predictionText !== "string" || !predictionText.trim()) {
+      throw new Error("The AI returned an empty result.");
+    }
+
+    // Render the model's Markdown as text, not executable HTML.
+    identificationResults.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.className = "h5";
+    heading.textContent = "Possible bird species";
+    identificationResults.appendChild(heading);
+
+    const lines = predictionText
+      .split("\n")
+      .filter(line => line.trim() && !line.startsWith("#"));
+
+    const list = document.createElement("ul");
+    list.className = "mt-3";
+
+    lines.forEach(line => {
+      const item = document.createElement("li");
+      item.className = "mb-2";
+      item.textContent = line.replace(/^\s*-\s*/, "")
+        .replace(/\*\*/g, "");
+      list.appendChild(item);
+    });
+
+    identificationResults.appendChild(list);
+
+    uploadMessage.textContent =
+      "Identification complete! Predictions may be incorrect.";
+    uploadMessage.className = "small mt-3 mb-0 text-success";
+
+  } catch (error) {
+    console.error("BirdLens identification error:", error);
+
+    identificationResults.textContent =
+      "We couldn't identify this photo right now. Please try again in a moment.";
+
+    uploadMessage.textContent =
+      "Check your internet connection or try again shortly.";
+    uploadMessage.className = "small mt-3 mb-0 text-danger";
+  } finally {
+    isIdentifying = false;
+    identifyButton.disabled = false;
+    identifyButton.textContent = "Identify this bird ↗";
+  }
+});
+
 removePhoto.addEventListener("click", () => {
+  if (isIdentifying) return;
+
   birdPhoto.value = "";
 
   if (previewUrl) {
@@ -65,6 +147,7 @@ removePhoto.addEventListener("click", () => {
   previewPanel.classList.add("d-none");
   uploadZone.classList.remove("d-none");
   uploadMessage.textContent = "";
+  identificationResults.replaceChildren();
 });
 
 const quests = [
@@ -85,6 +168,5 @@ document.getElementById("newQuest").addEventListener("click", () => {
   } while (quests.length > 1 && index === lastQuestIndex);
 
   lastQuestIndex = index;
-
   document.querySelector(".quest-text").textContent = quests[index];
 });
