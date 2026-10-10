@@ -1,6 +1,3 @@
-
-import { Client, handle_file } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
-
 // ==========================================
 // 1. BIRD UPLOAD + AI ELEMENTS
 // ==========================================
@@ -63,11 +60,9 @@ const manualBirdName = document.getElementById("manualBirdName");
 // 3. CONFIGURATION + STATE
 // ==========================================
 
-const SPACE_NAME = "ksri33/birdlens-ai";
 const JOURNAL_KEY = "birdlens-sightings-v1";
 
 let previewUrl = null;
-let gradioClient = null;
 let isIdentifying = false;
 let currentPredictions = [];
 let currentBirdName = "";
@@ -474,17 +469,22 @@ identifyButton.addEventListener("click", async () => {
   identifyButton.textContent = "Identifying your bird...";
 
   try {
-    if (!gradioClient) {
-      gradioClient = await Client.connect(SPACE_NAME);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch("/api/identify", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+        throw new Error(
+            data.error || "Bird identification is temporarily unavailable."
+        );
     }
-
-    const result = await gradioClient.predict(
-      "/identify_bird",
-      [handle_file(file)]
-    );
-
-    const predictionText = result.data?.[0];
-
+    const predictionText = data.result;
     if (
       typeof predictionText !== "string" ||
       !predictionText.trim()

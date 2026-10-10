@@ -1,11 +1,9 @@
-node_modules/
-.env
-.env.*
-!.env.example
+gitignore
+venv/
 .venv/
 __pycache__/
 *.py[cod]
+.env
+.env.*
+!.env.example
 .DS_Store
-Thumbs.db
-venv
-env
