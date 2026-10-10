@@ -17,13 +17,16 @@ app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024  # 10 MB
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 def get_gradio_client():
     """Create a client for the BirdLens Hugging Face Space."""
     token = os.getenv("HF_TOKEN")
 
     if token:
-        return Client(SPACE_ID, token=token, verbose=False)
+        return Client(
+            SPACE_ID,
+            hf_token=token,
+            verbose=False
+        )
 
     return Client(SPACE_ID, verbose=False)
 
