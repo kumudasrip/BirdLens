@@ -630,13 +630,59 @@ h2 {
   border-radius: 50%;
 }
 
-/* Square, centered bird photos in journal cards */
+/* Responsive bird journal grid */
+.sightings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* Equal-sized bird cards */
+.sighting-card {
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 8px 25px #233c2508;
+}
+
+/* Consistent square photo frame */
 .sighting-card img {
   display: block;
   width: 100%;
-  height: auto;
   aspect-ratio: 1 / 1;
+  height: auto;
   object-fit: contain;
   object-position: center;
   background: var(--sage);
+  flex-shrink: 0;
+}
+
+/* Card details */
+.sighting-card-body {
+  flex: 1;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Tablet: two cards per row */
+@media (max-width: 991px) {
+  .sightings-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: one card per row */
+@media (max-width: 575px) {
+  .sightings-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
 }
