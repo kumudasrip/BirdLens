@@ -122,6 +122,32 @@
                 </button>
               </div>
               <div id="identificationResults" class="mt-4" aria-live="polite"></div>
+
+              <div id="sightingDetails" class="sighting-details mt-4 d-none">
+                <h3 class="h5 mb-3">Save this little discovery</h3>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="sightingDate" class="form-label">Date spotted</label>
+                    <input type="date" id="sightingDate" class="form-control" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="sightingLocation" class="form-label">Where did you spot it? (optional)</label>
+                    <input type="text" id="sightingLocation" class="form-control" maxlength="120"
+                           placeholder="e.g. My garden, Hyderabad">
+                  </div>
+                  <div class="col-12">
+                    <label for="sightingNotes" class="form-label">Field notes (optional)</label>
+                    <textarea id="sightingNotes" class="form-control" rows="3" maxlength="1000"
+                              placeholder="What did you notice about this bird?"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button id="saveSightingButton" type="button" class="btn btn-forest">
+                      Save to my field journal ↗
+                    </button>
+                    <p id="journalMessage" class="small mt-2 mb-0" aria-live="polite"></p>
+                  </div>
+                </div>
+              </div>
             </div>
             <p id="uploadMessage" class="small mt-3 mb-0" role="status" aria-live="polite"></p>
           </div>
@@ -135,7 +161,7 @@
               </div>
               <div class="how-step">
                 <span>02</span>
-                <div><strong>Discover its identity</strong><p>Our planned AI feature will suggest possible species.</p></div>
+                <div><strong>Discover its identity</strong><p>Our AI suggests possible species from your photo.</p></div>
               </div>
               <div class="how-step">
                 <span>03</span>
@@ -149,7 +175,7 @@
       </div>
     </section>
 
-    <section class="container py-5" id="journal">
+    <section class="container py-5" id="journal-intro">
       <div class="feature-card">
         <div>
           <div class="eyebrow">YOUR OWN LITTLE FIELD GUIDE</div>
@@ -162,6 +188,40 @@
         </div>
         <div class="feature-art" aria-hidden="true">✳</div>
       </div>
+    </section>
+
+    <section class="container py-5" id="journal">
+      <div class="section-heading mb-4">
+        <div>
+          <div class="eyebrow">YOUR PERSONAL COLLECTION</div>
+          <h2 class="mt-2">My field journal.</h2>
+          <p class="muted mb-0">A little record of the birds you've met along the way.</p>
+        </div>
+        <span class="section-number">02 / COLLECT</span>
+      </div>
+
+      <div class="journal-stats mb-4">
+        <div class="journal-stat">
+          <span id="totalSightings">0</span>
+          <p>Total sightings</p>
+        </div>
+        <div class="journal-stat">
+          <span id="uniqueSpecies">0</span>
+          <p>Different species</p>
+        </div>
+      </div>
+
+      <div id="emptyJournal" class="empty-journal">
+        <div class="empty-journal-icon" aria-hidden="true">✳</div>
+        <h3>Your first discovery is waiting.</h3>
+        <p>Identify a bird above and save it here to start your collection.</p>
+        <a href="#identify" class="btn btn-forest">Identify a bird ↗</a>
+      </div>
+
+      <div id="sightingsCollection" class="sightings-grid"></div>
+      <p class="journal-storage-note mt-3 mb-0">
+        Your sightings are saved in this browser on this device. They are not synced to an account.
+      </p>
     </section>
 
     <section class="container py-4 pb-5" id="quest">
