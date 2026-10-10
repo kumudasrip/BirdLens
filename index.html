@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f6ef">
+  <meta name="description" content="BirdLens helps you discover birds, learn about nature, and keep your own birdwatching journal.">
+
+  <title>BirdLens — Look closer. Discover more.</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container py-2">
+      <a class="navbar-brand fw-bold" href="#">
+        <span class="brand-icon">✳</span> BirdLens
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <div class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+          <a class="nav-link" href="#identify">Identify a bird</a>
+          <a class="nav-link" href="#journal">My journal</a>
+          <a class="nav-link" href="#quest">Nature quest</a>
+          <a class="btn btn-forest ms-lg-2" href="#identify">Start exploring ↗</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero container py-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="eyebrow mb-3">
+            <span class="status-dot"></span> YOUR LITTLE WINDOW INTO NATURE
+          </div>
+
+          <h1>Look closer.<br>Discover <span>more.</span></h1>
+
+          <p class="hero-copy mt-4">
+            Every bird has a story. Discover the birds around you,
+            learn their secrets, and turn your little walks into
+            something wonderful.
+          </p>
+
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#identify" class="btn btn-forest btn-lg">
+              Identify a bird ↗
+            </a>
+            <a href="#quest" class="btn btn-outline-forest btn-lg">
+              Explore nature
+            </a>
+          </div>
+
+          <div class="hero-note mt-4">
+            <span>◉</span> Made for curious minds and outdoor moments.
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="hero-art">
+            <div class="art-label">A LITTLE MOMENT IN NATURE</div>
+            <img
+              src="https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=1100&q=85"
+              alt="A bird perched among branches in nature"
+              class="hero-image"
+            >
+            <div class="floating-note">
+              <span class="note-icon">✳</span>
+              <div>
+                <strong>Take a closer look</strong>
+                <p class="mb-0">There's wonder everywhere.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pb-5" id="identify">
+      <div class="section-heading mb-4">
+        <div>
+          <div class="eyebrow">YOUR DISCOVERY STARTS HERE</div>
+          <h2 class="mt-2">Who did you meet today?</h2>
+          <p class="muted mb-0">
+            Bring us a photo. Let's discover the bird behind it.
+          </p>
+        </div>
+        <span class="section-number">01 / IDENTIFY</span>
+      </div>
+
+      <div class="upload-card">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <label for="birdPhoto" class="upload-zone" id="uploadZone">
+              <div class="upload-symbol">↑</div>
+              <h3>Bring your bird photo</h3>
+              <p class="muted">Choose a photo from your device to get started.</p>
+              <span class="btn btn-forest">Choose a photo</span>
+              <span class="upload-hint">JPG, PNG or WEBP · Max 10 MB</span>
+            </label>
+            <input type="file" id="birdPhoto" accept="image/jpeg,image/png,image/webp" hidden>
+
+            <div id="previewPanel" class="preview-panel d-none mt-3">
+              <img id="photoPreview" alt="Preview of your selected bird photo">
+              <div class="preview-info">
+                <strong id="photoName"></strong>
+                <p class="muted mb-0">Photo ready for the next step.</p>
+              </div>
+              <button id="removePhoto" class="btn btn-outline-forest" type="button">Remove</button>
+            </div>
+            <p id="uploadMessage" class="small mt-3 mb-0" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="how-card">
+              <div class="eyebrow mb-3">A SIMPLE LITTLE JOURNEY</div>
+              <div class="how-step">
+                <span>01</span>
+                <div><strong>Share your photo</strong><p>Choose a picture of a bird you've spotted.</p></div>
+              </div>
+              <div class="how-step">
+                <span>02</span>
+                <div><strong>Discover its identity</strong><p>Our planned AI feature will suggest possible species.</p></div>
+              </div>
+              <div class="how-step">
+                <span>03</span>
+                <div><strong>Keep the memory</strong><p>Learn something new and save your sighting.</p></div>
+              </div>
+              <div class="model-note mt-2">
+                AI identification is coming soon. This first version only previews your photo.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-5" id="journal">
+      <div class="feature-card">
+        <div>
+          <div class="eyebrow">YOUR OWN LITTLE FIELD GUIDE</div>
+          <h2 class="mt-2">Every sighting tells a story.</h2>
+          <p class="muted">
+            Build a personal collection of the birds you encounter,
+            one little discovery at a time.
+          </p>
+          <a href="#identify" class="text-link">Start your first discovery ↗</a>
+        </div>
+        <div class="feature-art" aria-hidden="true">✳</div>
+      </div>
+    </section>
+
+    <section class="container py-4 pb-5" id="quest">
+      <div class="quest-card">
+        <div class="eyebrow">YOUR OUTDOOR MOMENT</div>
+        <h2 class="mt-3">Today's nature quest</h2>
+        <p class="quest-text">
+          Find a quiet spot. Spend five minutes observing the birds
+          around you. Notice how they move, where they perch, and
+          what sounds they make.
+        </p>
+        <button class="btn btn-light mt-2" id="newQuest" type="button">
+          Give me another quest ↗
+        </button>
+        <p class="quest-foot mt-3 mb-0">A little less scrolling. A little more noticing.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container py-4 footer">
+    <a class="navbar-brand fw-bold" href="#">✳ BirdLens</a>
+    <p class="muted mb-0">Made for the love of birds and the world outside.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
